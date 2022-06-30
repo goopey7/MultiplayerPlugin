@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interfaces/OnlineSessionInterface.h"
 #include "MultiplayerPluginCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -26,7 +27,6 @@ public:
 	float TurnRateGamepad;
 
 protected:
-
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
 
@@ -63,9 +63,12 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 public:
+	IOnlineSessionPtr OnlineSessionInterface;
+protected:
+	UFUNCTION(BlueprintCallable)
+	void CreateGameSession();
+	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
 
-	// This is the typedef used in OnlineSubsystem.h for IOnlineSessionPtr
-	// would rather forward declare though so here it is
-	TSharedPtr<class IOnlineSession,ESPMode::ThreadSafe> OnlineSessionInterface;
+private:
+	FOnCreateSessionCompleteDelegate CreateSessionCompleteDelegate;
 };
-
