@@ -61,5 +61,11 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+public:
+
+	// This is the typedef used in OnlineSubsystem.h for IOnlineSessionPtr
+	// would rather forward declare though so here it is
+	TSharedPtr<class IOnlineSession,ESPMode::ThreadSafe> OnlineSessionInterface;
 };
 
